@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+
+<head>
+<meta charset="UTF-8">
+<title>danh sách món ăn</title>
+<script type="text/javascript" th:src="@{/js/Sanpham.js}"></script>
+<script type="text/javascript" th:src="@{/js/sanpham.js}"></script>
+<script th:src="@{/js/bootstrap-multiselect.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" />
+
+
+<style type="text/css">
+.container {
+	width: 98%;
+	margin: auto;
+	border-radius: 5px;
+	padding: 20px;
+}
+</style>
+</head>
+<body>
+	<!--<ul th:replace="fragments/header :: navigation"></ul>-->
+	<div layout:fragment="content">
+		<div class="container">
+			<!-- <div sec:authorize="isAuthenticated()">
+				Welcome <b><span sec:authentication="name">Username</span></b>
+				&nbsp; <i><span sec:authentication="principal.authorities">Roles</span></i>
+			</div> -->
+
+			<form action="/sanpham/dataSearch" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-sm-6">
+						<label for="namesp" class="mr-sm-2">Tên sản phẩm:</label> <input
+							type="text" placeholder="Nhập name cần tìm" name="namesp"
+							class="form-control" th:value="${session.NAMESP}" />
+					</div>
+					<div class="col-sm-6">
+						<label for="name" class="mr-sm-2">Loại món:</label> <select
+							class="form-control" id="categorySearch" name="categorySearch[]"
+							multiple>
+							<option th:each="item: ${CATEGORY}" th:value="${item.id}"
+								th:text="${item.loaimon}"></option>
+						</select>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary"
+					style="margin-top: 10px; margin-bottom: 10px; float: right;">
+					<span class="glyphicon glyphicon-search"></span> Tìm kiếm
+				</button>
+			</form>
+			<br> <br> <br>
+
+			<th:block th:if="${null == products}">
+				<h3 style="text-align: center;" th:text="${session.messenger}"></h3>
+			</th:block>
+			<th:block th:unless="${null == products}">
+
+				<nav class="row justify-content-center wow fadeIn"
+					data-wow-delay="0.2s">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td>STT</td>
+								<td width="0px">Tên món ăn</td>
+								<td>Ảnh</td>
+								<td width="0px">Giá bán</td>
+								<td>sale</td>
+								<td>Sản phẩm nổi bật</td>
+								<td>Sản phẩm mới</td>
+								<!-- 	<td>Chi tiết</td> -->
+								<th>Loại món ăn</th>
+								<!-- 	<th>created_at</th>
+							<th>updated_at</th> -->
+								<td width="180px"
+									sec:authorize="hasAnyAuthority('Chủ cửa hàng')"><a
+									href="/sanpham/">Thêm món ăn</a></td>
+
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="product,index : ${products.pageList}">
+								<td th:text="${index.count}"></td>
+
+								<td><a th:href="@{/admin/product/{id}(id=${product.id})}"
+									th:text="${product.name}"></a></td>
+
+								<td width="100"><img alt=""
+									th:src="@{'/getimage/'+${product.image}}" width="80"
+									height="70" /></td>
+
+								<td>[[*{#numbers.formatCurrency(product.price)}]] <!-- Button trigger modal -->
+									<br>
+									<button type="button" class="btn btn-primary btn-sm mt-2"
+										data-toggle="modal"
+										th:attr="data-target='#exampleModalCenterPrice'+${product.id}">sửa
+										giá</button> <!-- Modal -->
+									<div class="modal fade"
+										th:id="*{'exampleModalCenterPrice'+{product.id}}"
+										tabindex="-1" role="dialog"
+										aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalCenterTitle">Sửa
+														giá sản phẩm</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+
+													<form action="/sanpham/changePrice" method="post">
+														<div class="form-group">
+															<label>Id sản phẩm</label> <input type="text"
+																th:value="*{product.id}" class="form-control" name="id">
+															<label>Giá sản phẩm mới</label> <input type="number"
+																name="newPrice" class="form-control"> <br>
+															<button type="submit" class="btn btn-primary">Lưu</button>
+															<button type="button" class="btn btn-secondary"
+																data-dismiss="modal">Close</button>
+														</div>
+													</form>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</td>
+								<td th:text="${product.sale}"></td>
+								<td th:text="${product.highlight}"></td>
+								<td th:text="${product.new_product}"></td>
+								<td th:text="${product.categorys.loaimon}"></td>
+								<td><a class="btn btn-primary btn-sm"
+									th:href="@{'/sanpham/edit/' + ${product.id}}">Sửa<span
+										class="glyphicon glyphicon-pencil"></a> <a
+									class="btn btn-primary btn-sm"
+									th:href="@{'/sanpham/delete/' + ${product.id}}">Xoá<span
+										class="glyphicon glyphicon-trash"></a> <a
+									class="btn btn-primary btn-sm chi"
+									th:href="@{/sanpham/sanpham-chitiet/}" data-toggle="modal"
+									data-target="#myChitiet"
+									th:attrappend="data-target=${product.id}">chi tiết</a></td>
+								<td>
+									<!-- The Modal Chi tiet -->
+									<div class="modal" id="myChitiet"
+										th:attrappend="id=${product.id}">
+										<div class="modal-dialog">
+											<div class="modal-content chitiet"
+												style="width: 500px; margin-left: 0px;">
+
+												<!-- 	Modal Header -->
+												<div class="modal-header">
+													<h4>Chi tiết sản phẩm</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div id="chitiet-body" style="margin: 25px;">
+													<table class="table table-bordered">
+														<tr>
+															<th>Id</th>
+															<td th:text="${product.id}"></td>
+														</tr>
+														<tr>
+															<th>Tên sản phẩm</th>
+															<td th:text="${product.name}"></td>
+														</tr>
+														<tr>
+															<th>Ảnh</th>
+															<td><img alt=""
+																th:src="@{'/getimage/'+${product.image}}" width="150px"
+																height="130px"/></td>
+														</tr>
+														<tr>
+															<th>Gía bán</th>
+															<td th:text="${product.price}"></td>
+														</tr>
+														<tr>
+															<th>Chi tiết</th>
+															<td th:text="${product.details}"></td>
+														</tr>
+														<tr>
+															<th>Giảm giá</th>
+															<td th:text="${product.giamgia}"></td>
+														</tr>
+														<tr>
+															<th>Ngày tạo</th>
+															<td th:text="${product.created_at}"></td>
+														</tr>
+
+														<tr>
+															<th>Ngày cập nhập</th>
+															<td th:text="${product.updated_at}"></td>
+														</tr>
+
+
+													</table>
+												</div>
+												<div class="modal-footer"></div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pagination">
+						<li
+							th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+							<a class="page-link" th:href="@{/sanpham/page/1}">Đầu tiên</a>
+						</li>
+						<li
+							th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+							<a class="page-link" aria-label="Previous"
+							th:href="@{|${baseUrl}${currentIndex - 1}|}"
+							title='Go to previous page'><span aria-hidden="true">«</span>
+								<span class="sr-only">Previous</span></a>
+						</li>
+						<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+							th:class="${item == currentIndex ? 'page-item active' :'page-item' }">
+							<a class="page-link" th:href="@{|${baseUrl}${item}|}"> <span
+								th:text='${item}'>1</span>
+						</a>
+						</li>
+						<li
+							th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+							<a class="page-link" aria-label="Next"
+							th:href="@{|${baseUrl}${currentIndex + 1}|}"
+							title='Go to next page'><span aria-hidden="true">»</span> <span
+								class="sr-only">Next</span></a>
+						</li>
+						<li
+							th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+							<a class="page-link" th:href="@{|${baseUrl}${totalPageCount}|}">Cuối
+								cùng</a>
+						</li>
+						<hr>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div>Tổng số trang: [[${totalPageCount}]]
+							&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;trang: [[${currentIndex}]] /
+							[[${totalPageCount}]]</div>
+					</ul>
+				</nav>
+		</div>
+	</div>
+</body>
+</html>

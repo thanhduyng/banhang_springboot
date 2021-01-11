@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Site Metas -->
+<title>view-cart</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="/user/images/menu.jpg"
+	type="image/x-icon">
+<link rel="apple-touch-icon" href="/user/images/apple-touch-icon.png">
+<!-- FontAwesome Icons core CSS -->
+<link href="/tintuc/css/font-awesome.mined.css" rel="stylesheet">
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/user/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="/user/css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="/user/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/user/css/custom.css">
+
+
+
+</head>
+
+<body>
+
+
+	<!-- Start Main Top -->
+	<ul th:replace="fragments/header :: navigation"></ul>
+	<!-- End Main Top -->
+
+	<!-- Start All Title Box -->
+	<div class="all-title-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2>Giỏ hàng</h2>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Giỏ hàng</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Title Box -->
+
+	
+
+	<!-- Start Cart  -->
+	<div class="cart-box-main">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="table-main table-responsive">
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Mã sản phẩm</th>
+									<th>Tên món</th>
+									<th width="15%">Ảnh</th>
+									<th>Giá Tiền</th>
+									<th>Giảm giá</th>
+									<th>Số lượng</th>
+									<th>Tổng tiền</th>
+									<th>Xoá</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+								<tr th:each="item,index: ${session.Cart}">
+
+									<td th:text="${item.key}"></td>
+
+									<td class="name-pr"><a href="#"
+										th:text="${item.value.product.name}"></a></td>
+
+									<td class="thumbnail-img"><img alt=""
+										th:src="@{'/getimage/'+${item.value.product.image}}"
+										width="100" height="100" /> </a></td>
+
+									<td class="price-pr"><span
+										th:text="${#numbers.formatCurrency(item.value.product.price)}"></span>
+									</td>
+									
+									<td class="price-pr"><span
+										th:text="${#numbers.formatCurrency(item.value.product.giamgia)}"></span>
+									</td>
+
+									<td>
+										<form action="#" th:action="@{/update}" method="post">
+											<input type="hidden" th:value="${item.key}" name="id" /> <input
+												type="number" min="1" max="100"
+												th:value="${item.value.quanty}" name="qty" />
+											<button type="submit" class="btn btn-primary">update</button>
+										</form>
+									</td>
+
+									<td><span
+										th:text="${#numbers.formatCurrency(item.value.product.price * item.value.quanty)}">
+										</span>
+									</td>
+
+									<td><a class="btn hvr-hover"
+										th:href="@{'/DeleteCart/'+ ${item.key}}" type="button">Remove</a>
+
+									</td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div><hr><br>
+			
+			<h2 align="right">
+				Tổng tiền: <span
+					th:text="${#numbers.formatCurrency(session.TotalPriceCart)}"></span>
+			</h2>
+
+			<div class="row my-5">
+				<div class="col-lg-6 col-sm-6">
+					<div class="col-lg-6 col-sm-6">
+						<div class="update-box">
+
+							<a class="btn hvr-hover" data-fancybox-close="" href="/">Tiếp
+								tục chọn món </a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 " >
+					<div class="update-box" align="right">
+						<a class="btn hvr-hover" data-fancybox-close="" href="/checkout">Xác
+							nhận đơn hàng </a>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+	<!-- End Cart -->
+
+
+	<!-- Start Footer  -->
+	<ul th:replace="fragments/footer :: navigation"></ul>
+	<!-- End Footer  -->
+
+	<!-- <decorator:getProperty property="page.script"></decorator:getProperty>
+
+	<content tag="script"> <script>
+		$('.edit-cart').on("click", function() {
+			alert($(this).data("id"));
+			/* var id = $(this).data("id");
+			var quanty = $("#quanty-cart-"+id).val();
+			window.location = "EditCart/"+id"/"+quanty; */
+		});
+	</script> </content> -->
+
+</body>
+
+</html>

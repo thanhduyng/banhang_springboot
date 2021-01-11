@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<title>sửa don hang</title>
+
+<style type="text/css">
+.container {
+	width: 95%;
+	margin: auto;
+	border-radius: 5px;
+}
+</style>
+
+</head>
+<body>
+	<article layout:fragment="content">
+
+		<div class="container" style="margin-top: 10px;">
+
+			<div class="col-sm-12">
+				<br>
+				<h2 align="left">Cập nhật trạng thái</h2>
+				<hr>
+				<br>
+				<form th:action="${ACTION}" th:object=${BILLDETAIL} method="post">
+
+					<div class="form-group">
+						<label>Trạng thái</label>
+						<div class="radio">
+							<!--value = 1 => Nam| 0 =>Nu -->
+							<label class="checkbox-inline"> <input type="radio"
+								th:field="*{trangthai}" name="trangthai" value="1"
+								id="trangthai">Đang xử lí
+							</label>&nbsp;&nbsp;&nbsp; <label class="checkbox-inline"> <input
+								type="radio" th:field="*{trangthai}" name="trangthai"
+								checked="checked" value="2" id="trangthai">Đang giao
+								hàng
+							</label>&nbsp;&nbsp;&nbsp; <label class="checkbox-inline"> <input
+								type="radio" th:field="*{trangthai}" name="trangthai"
+								checked="checked" value="3" id="trangthai">Đã giao hàng
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Tên người mua</label> <select th:field="*{bills}"
+							class="form-control" name="bills">
+							<option th:each="item: ${INFOR}" th:value="${item.id}"
+								th:text="${item.display_name}"></option>
+
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Tên món ắn</label> <select th:field="*{products}"
+							class="form-control" name="products">
+							<option th:each="item: ${PRODUCT}" th:value="${item.id}"
+								th:text="${item.name}"></option>
+
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Số lượng</label> <input type="number"
+							th:field="*{quantity}" class="form-control" name="quantity"
+							placeholder="Nhập số lượng" id="quantity">
+					</div>
+
+					<div class="form-group">
+						<label>Tổng tiền</label> <input type="number" th:field="*{total}"
+							class="form-control" name="total" placeholder="Nhập tổng tiền"
+							id="total">
+					</div>
+
+					<div class="form-group">
+						<label>Ngày đặt hàng</label> <input type="text"
+							th:field="*{datetime}" class="form-control" name="datetime"
+							placeholder="Nhập datetime" id="datetime">
+					</div>
+
+					<div class="form-group">
+						<label>&ensp;<a></a></label> <input type="hidden" th:field="*{id}"
+							class="form-control" name="id" placeholder="Enter id" id="id"
+							value="">
+					</div>
+					<!-- th:text="${BILLDETAIL.id}" -->
+
+					<button class="btn btn-primary" type="submit">Cập nhập</button>
+					<a class="btn btn-primary" href="/don-hang/list">Danh sách</a>
+				</form>
+			</div>
+		</div>
+	</article>
+</body>
+</html>

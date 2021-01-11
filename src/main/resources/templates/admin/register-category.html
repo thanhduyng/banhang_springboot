@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+<head>
+<meta charset="UTF-8">
+<title>Category</title>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" style="margin-top: 10px;"><br>
+			<!-- <div class="row"
+				style="border: 1px darkgrey solid;  width: 90%; margin: 20px; padding: 20px;"> -->
+				<div class="col-sm-12">
+
+					<h2 class="myclass">Thêm loại món ăn</h2><hr><br>
+					<form th:action="${ACTION}" th:object=${CATEGORY} method="post">
+
+
+						<div class="form-group">
+							<label>Loại món ăn</label> <input type="text"
+								th:field="*{loaimon}" class="form-control" name="loaimon"
+								placeholder="Nhập loại món ăn" id="loaimon"><br> <span
+								th:if="${#fields.hasErrors('loaimon')}" th:errors="*{loaimon}"
+								class="alert-danger">loai mon error</span>
+						</div>
+						<button type="submit" class="btn btn-primary">Lưu</button>
+						<button type="reset" class="btn btn-primary">Huỷ</button>
+						<a class="btn btn-primary" href="/category/page/1">Danh sách</a>
+					</form>
+				</div>
+			</div>
+		</div>
+<!-- 	</div> -->
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+<head>
+<meta charset="UTF-8">
+<title>số lượng</title>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+
+<style type="text/css">
+.thongke {
+	display: block;
+	width: 1010px;
+}
+</style>
+
+</head>
+<body>
+
+	<section class="main__content" layout:fragment="content">
+		<br>
+		<div class="container1" style="margin-left: 25px;">
+			<h3 align="">Thống kê số lượng sản phẩm theo tháng</h3>
+			<hr>
+
+			<div class="form-timkiem1" style="margin-left: 600px;">
+				<form th:action="@{/thongke/sanphamthang}">
+					<input type="text" name="sanphamthang" th:value="${session.THANG}"
+						placeholder="Nhập theo tháng"> <input type="text"
+						name="sanphamnam" th:value="${session.NAM}" placeholder="Nhập theo năm">
+
+				<button class="btn btn-primary btn-sm" type="submit">Tìm kiếm</button>
+				</form>
+			</div>
+				<div class="inner-block">
+				<div class="chit-chat-layer1">
+
+					<div class="col-md-7">
+						<div class="">
+							<div class="thongke">
+
+								<canvas id="bar" height="50%" width="100%"></canvas>
+								<script th:inline="javascript">
+									var barChartData = {
+										labels : [
+
+										/*<![CDATA[*/
+
+										/*[# th:each="item : ${SANPHAM}"]*/
+
+										/*[[${item.time}]]*/,
+
+										/*[/]*/
+
+										/*]]>*/
+
+										],
+										datasets : [ {
+											fillColor : "#FC8213",
+											data : [
+
+											/*<![CDATA[*/
+
+											/*[# th:each="item : ${SANPHAM}"]*/
+
+											/*[[${item.value}]]*/,
+
+											/*[/]*/
+
+											/*]]>*/
+
+											]
+										} ]
+
+									};
+									new Chart(
+											document.getElementById("bar")
+													.getContext("2d"),
+											{
+
+												options : {
+													title : {
+														display : true,
+														text : ''
+													},
+													legend : {
+														display : true
+													}
+												},
+												type : "bar",
+												data : barChartData
+
+											});
+								</script>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

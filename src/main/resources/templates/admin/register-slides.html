@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>slides</title>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#img').change(function() {
+			showImageThumbnail(this);
+		});
+
+	});
+	function showImageThumbnail(fileInput) {
+		file = fileInput.files[0];
+
+		reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('#thumbnail').attr('src', e.target.result);
+		};
+
+		reader.readAsDataURL(file);
+	};
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" style="margin-top: 10px;">
+			<!-- <div class="row"
+				style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;"> -->
+			<div class="col-sm-12">
+
+				<br>
+				<h2 align="">Thêm sildes</h2><hr>
+				<form th:action="${ACTION}" th:object=${SLIDESDTO} method="post"
+					enctype="multipart/form-data">
+
+
+					<div class="form-group">
+						<input type="hidden" th:field="*{id}" class="form-control"
+							name="id" placeholder="Enter id" id="id" value="">
+					</div>
+
+					<div class="form-group">
+						<label>Tiêu đề</label> <input type="text" th:field="*{caption}"
+							class="form-control" name="caption" placeholder="Enter caption"
+							id="caption" value=""><span
+							th:if="${#fields.hasErrors('caption')}" th:errors="*{caption}"
+							class="alert-danger">tên error</span>
+					</div>
+
+					<label class="mb-2 mr-sm-2">Ảnh</label> <input type=file
+						th:field="*{img}" class="form-control mb-2 mr-sm-2" name="img"
+						placeholder="Enter img" id="img" value="" accept="image/png, image/jpeg"><br>
+
+					
+					<img width="16%" id="thumbnail" alt="Logo">
+
+
+					<p class="form-group">
+						<label for="comment">Nội dung:</label>
+						<textarea class="form-control" th:field="*{content}" rows="4"
+							name="content"></textarea>
+						<span th:if="${#fields.hasErrors('content')}"
+							th:errors="*{content}" class="alert-danger">tên error</span>
+					</p>
+					<button class="btn btn-primary" type="submit">Lưu</button>
+					<a class="btn btn-primary" href="/slides/page/1">Danh sách</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 	</div> -->
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#content").richText();
+		});
+	</script>
+</body>
+</html>
+

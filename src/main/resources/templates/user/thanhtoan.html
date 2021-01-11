@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- Basic -->
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Site Metas -->
+<title>Kiểm tra</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="/user/images/menu.jpg"
+	type="image/x-icon">
+<link rel="apple-touch-icon" href="/user/images/apple-touch-icon.png">
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/user/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="/user/css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="/user/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/user/css/custom.css">
+<!-- FontAwesome Icons core CSS -->
+<link href="/tintuc/css/font-awesome.mined.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+	<!-- Start Main Top -->
+	<ul th:replace="fragments/header :: navigation"></ul>
+	<!-- End Main Top -->
+
+	<!-- Start Top Search -->
+	<div class="top-search">
+		<div class="container">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="Search">
+				<span class="input-group-addon close-search"><i
+					class="fa fa-times"></i></span>
+			</div>
+		</div>
+	</div>
+	<!-- End Top Search -->
+
+	<!-- Start All Title Box -->
+	<div class="all-title-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2>Checkout</h2>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Checkout</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Title Box -->
+	<br>
+	<div class="container-fluid">
+		<!-- Control the column width, and how they should appear on different devices -->
+		<div class="row">
+			<div class="col-sm-6" style="">
+				<!-- Start Cart  -->
+				<div class="cart-box-main">
+					<div class="container" style="margin-left: 70px;">
+						<div class="row new-account-login">
+							<div class="col-sm-8">
+								<div class="title-left">
+									<h1>Thanh toán đơn hàng</h1>
+								</div>
+								<div class="left">
+									<form th:action="@{/thanhtoan}" method="post">
+										<input th:unless="${session.CUSTOMER}"
+											th:value="${session.CUSTOMER.id}" name="id" type="hidden">
+										<input th:if="${session.CUSTOMER}"
+											th:value="${session.CUSTOMER.id}" name="id" type="hidden">
+										<div th:if="${session.CUSTOMER}" class="right">
+											<h3
+												th:text="'Tên khách hàng: '+${session.CUSTOMER.display_name}"></h3>
+											<h3 th:text="'Số điện thoại: '+${session.CUSTOMER.phone}"></h3>
+											<h3 th:text="'Email: '+${session.CUSTOMER.email}"></h3>
+											<h3 th:text="'Ghi chú: '+${session.CUSTOMER.ghichu}"></h3>
+										</div>
+										<hr>
+										<button type="submit" class="btn btn-danger">Thanh
+											toán</button>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Cart -->
+			</div>
+			<div class="col-sm-6" style="background-color:;">
+				<br> <br> <br>
+				<div class="container">
+					<div class="col-lg-9 col-sm-12">
+						<div class="order-box">
+							<h2 style="margin-left: 130px;">Sản phẩm đã đặt</h2>
+							<th:block th:each="item,index: ${session.Cart}">
+								<div class="d-flex">
+									<h4>Tên sản phẩm</h4>
+									<div class="ml-auto font-weight-bold"
+										th:text="${item.value.product.name}"></div>
+								</div>
+								<div class="d-flex">
+									<h4>Số lượng</h4>
+									<div class="ml-auto font-weight-bold"
+										th:text="${item.value.quanty}"></div>
+								</div>
+								<div class="d-flex">
+									<h4>Gía tiền</h4>
+									<div class="ml-auto font-weight-bold"
+										th:text="${#numbers.formatCurrency(item.value.product.price)}"></div>
+								</div>
+								<div class="d-flex">
+									<h4>Giarm giá</h4>
+									<div class="ml-auto font-weight-bold"
+										th:text="${#numbers.formatCurrency(item.value.product.giamgia)}"></div>
+								</div>
+								<hr>
+							</th:block>
+
+							<div class="d-flex gr-total">
+								<h5>Tổng tiền</h5>
+								<div class="ml-auto h5"
+									th:text="${#numbers.formatCurrency(session.TotalPriceCart)}"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<br>
+
+		<!-- Start Footer  -->
+		<ul th:replace="fragments/footer :: navigation"></ul>
+		<!-- End Footer  -->
+
+		<a href="#" id="back-to-top" title="Back to top"
+			style="display: none;">&uarr;</a>
+
+		<!-- ALL JS FILES -->
+		<script src="/user/js/jquery-3.2.1.min.js"></script>
+		<script src="/user/js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<!-- ALL PLUGINS -->
+		<script src="/user/js/jquery.superslides.min.js"></script>
+		<script src="/user/js/bootstrap-select.js"></script>
+		<script src="/user/js/inewsticker.js"></script>
+		<script src="/user/js/bootsnav.js."></script>
+		<script src="/user/js/images-loded.min.js"></script>
+		<script src="/user/js/isotope.min.js"></script>
+		<script src="/user/js/owl.carousel.min.js"></script>
+		<script src="/user/js/baguetteBox.min.js"></script>
+		<script src="/user/js/form-validator.min.js"></script>
+		<script src="/user/js/contact-form-script.js"></script>
+		<script src="/user/js/custom.js"></script>
+</body>
+
+</html>

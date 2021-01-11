@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- Basic -->
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Site Metas -->
+<title>Trang chủ</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="/user/images/menu.jpg"
+	type="image/x-icon">
+<link rel="apple-touch-icon" href="/user/images/apple-touch-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/user/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="/user/css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="/user/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/user/css/custom.css">
+<!-- FontAwesome Icons core CSS -->
+<link href="/tintuc/css/font-awesome.mined.css" rel="stylesheet">
+
+<style>
+h5.line-through {
+	text-decoration: line-through;
+}
+
+.item2 {
+	grid-area: menu;
+}
+
+.item3 {
+	grid-area: main;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-areas: 'menu main main right';
+	grid-gap: 5px;
+	/* background-color: gray; */
+	/* padding: 1px; */
+}
+
+.grid-container>div {
+	background-color: rgba(255, 255, 255, 0.8);
+	text-align: center;
+	padding: 20px 0;
+	font-size: 30px;
+}
+
+#main-content {
+	width: 100%;
+	margin: 0 auto;
+}
+
+aside {
+	width: 20%;
+	background-image: url(../user/images/menu.jpg);
+	border: 1px solid gray;
+	float: left;
+	height: 460px;
+}
+
+article {
+	width: 60%;
+	float: left;
+}
+
+.imagess {
+	width: 5%;
+	height: 2px;
+}
+
+.vmenu {
+	list-style-type: none; /* bỏ dấu chấm đầu dòng*/
+	margin: 2px;
+	padding: 10px;
+}
+
+.vmenu li {
+	border-bottom: 2px royalblue dashed;
+}
+
+.vmenu a {
+	text-decoration: none; /* bỏ dấu gạch chân*/
+	background: url(../images/bullet_red.png) no-repeat 1px;
+	font-weight: bold;
+	display: inline-block; /* bỏ hiệu ứng nổi*/
+	font-size: 27px;
+	padding: 1px;
+	padding-top: 4px;
+	font-family: serif;
+}
+
+.vmenu a:hover {
+	background: url(../images/bullet_yellow.png) no-repeat 1px;
+	/* background-color: white; */
+	display: block;
+	color: red;
+	font-weight: bold;
+}
+
+.col-33 {
+	width: 133.3333333333333%;
+	float: none;
+	margin-left: -400px;
+	margin-top: 10px;
+	
+	/*    background-color: gray;*/
+}
+
+.col-33 img {
+	margin: 0px;
+	padding: 0px;
+}
+
+.col-44 {
+	width: 100%;
+	float: left;
+	/* margin-left: 40px; */
+	/*    background-color: gray;*/
+}
+
+.col-44 img {
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+
+</head>
+
+<body>
+	<!-- Start Main Top -->
+
+	<!-- End Main Top -->
+
+	<!-- Start Main Top -->
+	<ul th:replace="fragments/header :: navigation"></ul>
+	<!-- End Main Top -->
+
+	<div id="main-content">
+		<aside>
+			<ul class="vmenu">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="special-menu text-center">
+							<div class="button-group filter-button-group">
+								<th:block th:each="item,index: ${categorys}">
+									<li th:if="${index.first}" class="active" data-filter="*">
+										<a th:text="${item.loaimon}"
+										th:href="@{'/come/san-pham/' + ${item.id}}"></a>
+									</li>
+									<li th:unless="${index.first}" class="item"
+										data-filter=".top-featured"><a th:text="${item.loaimon}"
+										th:href="@{'/come/san-pham/' + ${item.id}}"></a></li>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ul>
+
+		</aside>
+	</div>
+
+	<article>
+
+		<div class="col-33">
+			<div id="slides-shop" class="cover-slides">
+				<ul class="slides-container">
+					<th:block th:each="item,index: ${slides}">
+						<li th:if="${index.first}" class="item active"><img
+							class="imagess" th:src="@{'/getimage/'+${item.img}}" alt="">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12">
+										<h1 class="m-b-20">
+											<strong th:text="${item.caption}"> </strong>
+										</h1>
+										<p class="m-b-40" th:text="${item.content}"></p>
+										<p>
+											<a class="btn hvr-hover" href="#">Ẩm thực số 7</a>
+										</p>
+									</div>
+								</div>
+							</div></li>
+						<li th:unless="${index.first}" class="item"><img
+							class="imagess" th:src="@{'/getimage/'+${item.img}}" alt="">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12">
+										<h1 class="m-b-20">
+											<strong th:text="${item.caption}"> </strong>
+										</h1>
+										<p class="m-b-40" th:text="${item.content}"></p>
+										<p>
+											<a class="btn hvr-hover and " href="#">Ẩm thực số 7</a>
+										</p>
+									</div>
+								</div>
+							</div></li>
+					</th:block>
+				</ul>
+				<div class="slides-navigation">
+					<a href="#" class="next"><i class="fa fa-angle-right"
+						aria-hidden="true"></i></a> <a href="#" class="prev"><i
+						class="fa fa-angle-left" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+
+	</article>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- <h1 th:text="${slides.size()}"></h1> -->
+	<!-- <h1 th:text="${categorys.size()}"></h1> -->
+	<!-- Start Slider -->
+
+	<!-- End Slider -->
+	<br>
+
+
+	<!-- Start Instagram Feed  -->
+
+	<!-- 	<h1 th:text="${new_products.size()}"></h1>
+	<h1 th:text="${sale.size()}"></h1> -->
+
+
+	<div class="products_block block">
+		<h2 class="page-subheading ">Bán Chạy Nhất</h2>
+	</div>
+
+	<div class="instagram-box">
+		<div class="main-instagram owl-carousel owl-theme">
+			<th:block th:each="item,index: ${highlight}">
+				<div th:if="${index.first}" class="item active">
+
+					<div class="products-single fix">
+						<div class="box-img-hover">
+							<div class="type-lb">
+								<p class="sale">Nổi bật</p>
+							</div>
+							<img th:src="@{'/getimage/'+${item.image}}" class="img-fluid"
+								alt="Image">
+							<div class="mask-icon">
+								<ul>
+									<li><a
+										th:href="@{'/come/chi-tiet-san-pham/' + ${item.id_product}}"
+										data-toggle="tooltip" data-placement="right" title=""> <i
+											class="fas fa-eye"></i>Xem chi tiết
+									</a></li>
+									<!-- 	<li><a href="#" data-toggle="tooltip"
+										data-placement="right" title="Compare"><i
+											class="fas fa-sync-alt"></i></a></li>
+									<li><a href="#" data-toggle="tooltip"
+										data-placement="right" title="Add to Wishlist"><i
+											class="far fa-heart"></i></a></li> -->
+								</ul>
+								<form>
+									<a th:href="@{'/AddCart/' + ${item.id_product}}" class="cart"
+										type="submit">Thêm vào giỏ hàng</a>
+								</form>
+
+							</div>
+						</div>
+						<div class="why-text">
+							<h4 th:text="${item.name}"></h4>
+							<h5 th:text="${#numbers.formatCurrency(item.price)}"></h5>
+						</div>
+					</div>
+
+				</div>
+				<div th:unless="${index.first}" class="item">
+					<div class="products-single fix">
+						<div class="box-img-hover">
+							<div class="type-lb">
+								<p class="sale">Nổi bật</p>
+							</div>
+							<img th:src="@{'/getimage/'+${item.image}}" class="img-fluid"
+								alt="Image">
+							<div class="mask-icon">
+								<ul>
+									<li><a
+										th:href="@{'/come/chi-tiet-san-pham/' + ${item.id_product}}"
+										data-toggle="tooltip" data-placement="right" title=""><i
+											class="fas fa-eye"> </i>Xem chi tiết</a></li>
+
+								</ul>
+								<form>
+									<a th:href="@{'/AddCart/' + ${item.id_product}}" class="cart"
+										type="submit">Thêm vào giỏ hàng</a>
+								</form>
+							</div>
+						</div>
+						<div class="why-text">
+							<h4 th:text="${item.name}"></h4>
+							<h5 th:text="${#numbers.formatCurrency(item.price)}"></h5>
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+	<!-- End Instagram Feed  -->
+
+
+
+	<!-- da -->
+	<div class="grid-container">
+
+		<div class="item2">
+			<div class="">
+				<h2 class="page-subheadi">Sản phẩm giảm giá</h2>
+			</div>
+
+			<div class="categories-shop2">
+				<div class="container">
+					<div class="row">
+						<th:block th:each="item: ${sale}">
+							<div>
+
+								<div class=" col-sm-12 col-xs-12">
+
+									<div class="shop-cat-box1">
+										<div class="type-lb1">
+											<p class="sale"><th:block  th:text="${#numbers.formatCurrency((item.price) - (item.giamgia))}"></th:block></p>
+											<a th:href="@{'/come/chi-tiet-san-pham/' + ${item.id_product}}" class="sale2">		
+											</a>
+										</div>
+										
+										<img class="img-fluid2" th:src="@{'/getimage/'+${item.image}}"alt="" /> 
+										<a href="/as" class="why-text">
+										
+										<!-- 	<h4 th:text="${item.name}"></h4> -->
+											 <!-- 	<h5 class="line-through" th:text="${#numbers.formatCurrency(item.price)}"></h5> -->
+											<h5 class="line-through" th:text="${#numbers.formatCurrency(item.price)}"></h5>
+
+										</a>
+									</div>
+
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="item3">
+			<div class="">
+				<h2 class="page-subheadi">Sản phẩm mới</h2>
+			</div>
+			<div class="categories-shop">
+				<div class="container">
+					<div class="row">
+						<th:block th:each="item,index: ${new_products}">
+							<div th:if="${index.first}" class="item active">
+								<div class=" col-sm-12 col-xs-12">
+									<div class="shop-cat-box">
+										<img class="img-fluid" th:src="@{'/getimage/'+${item.image}}"
+											alt="" /> <a class="btn hvr-hover"
+											th:href="@{'/come/chi-tiet-san-pham/' + ${item.id_product}}"
+											th:text="${item.name}"></a>
+									</div>
+								</div>
+							</div>
+							<div th:unless="${index.first}" class="item">
+								<div class="col-sm-12 col-xs-12">
+									<div class="shop-cat-box">
+										<img class="img-fluid" th:src="@{'/getimage/'+${item.image}}"
+											alt="" /> <a class="btn hvr-hover"
+											th:href="@{'/come/chi-tiet-san-pham/' + ${item.id_product}}"
+											th:text="${item.name}"></a>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- da -->
+
+
+
+	<!-- Start Blog  -->
+	<div class="latest-blog">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="title-all text-center">
+						<h1>Tin Tức</h1>
+						<p>Những tìn tức của Ẩm thực số 7</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<th:block th:each="item,index: ${TINTUC}">
+					<div class="col-md-6 col-lg-4 col-xl-4">
+						<div class="blog-box">
+							<div class="blog-img">
+								<img class="imgg-fluid" width="80%"
+									th:src="@{'/getimage/'+${item.img}}" alt="" />
+							</div>
+							<div class="blog-content">
+								<div class="title-blog">
+									<h3 th:text="${item.tieude}"></h3>
+									<p th:text="${item.mieuta}"></p>
+								</div>
+								<ul class="option-blog">
+									<li><a
+										th:href="@{/come/tin-tuc/chi-tiet-tin-tuc/{id}(id=${item.id})}"><i
+											class="far fa-heart"></i></a></li>
+									<li><a
+										th:href="@{/come/tin-tuc/chi-tiet-tin-tuc/{id}(id=${item.id})}"><i
+											class="fas fa-eye"></i></a></li>
+									<li><a
+										th:href="@{/come/tin-tuc/chi-tiet-tin-tuc/{id}(id=${item.id})}"><i
+											class="far fa-comments"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</th:block>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- End Blog  -->
+
+	<!-- Start Footer  -->
+	<ul th:replace="fragments/footer :: navigation"></ul>
+	<!-- End Footer  -->
+
+	<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+	<!-- ALL JS FILES -->
+	<script src="/user/js/jquery-3.2.1.min.js"></script>
+	<script src="/user/js/popper.min.js"></script>
+	<script src="/user/js/bootstrap.min.js"></script>
+	<!-- ALL PLUGINS -->
+	<script src="/user/js/jquery.superslides.min.js"></script>
+	<script src="/user/js/bootstrap-select.js"></script>
+	<script src="/user/js/inewsticker.js"></script>
+	<script src="/user/js/bootsnav.js."></script>
+	<script src="/user/js/images-loded.min.js"></script>
+	<script src="/user/js/isotope.min.js"></script>
+	<script src="/user/js/owl.carousel.min.js"></script>
+	<script src="/user/js/baguetteBox.min.js"></script>
+	<script src="/user/js/form-validator.min.js"></script>
+	<script src="/user/js/custom.js"></script>
+</body>
+
+</html>

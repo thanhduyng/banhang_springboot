@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+<head>
+<meta charset="UTF-8" />
+<title>Thêm chức năng</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/css/StyleRegisterChucNang.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+</head>
+<body>
+
+	<section class="main__content" layout:fragment="content">
+		<br><div class="container" style="margin-left: 20px;">
+			<h2>Thêm chức năng</h2>
+			<hr>
+			<form th:action="@{/chucnang/saveChucNang}" th:object="${CHUCNANG}">
+
+				<input type="hidden" th:field="*{id}" name="id">
+
+				<div class="form-group">
+					<label for="recipient-name" class="col-form-label">Mã chức
+						năng(*):</label> <input type="text" class="form-control"
+						placeholder="Nhập mã chức năng" th:field="*{machucnang}">
+					<span th:if="${#fields.hasErrors('machucnang')}"
+						th:errors="*{machucnang}" class="alert-danger">tên error</span>
+				</div>
+
+				<div class="form-group">
+					<label for="recipient-name" class="col-form-label">Tên chức
+						năng(*)</label> <input type="text" class="form-control"
+						placeholder="Nhập tên chức năng" th:field="*{tenchucnang}">
+						
+						<span th:if="${#fields.hasErrors('tenchucnang')}"
+						th:errors="*{tenchucnang}" class="alert-danger">tên error</span>
+				</div>
+
+				<div class="form-group">
+					<label for="recipient-name" class="col-form-label">URL (*)</label>
+					<input type="text" class="form-control" placeholder="Nhập URL"
+						th:field="*{maapi}">
+						
+						<span th:if="${#fields.hasErrors('maapi')}"
+						th:errors="*{maapi}" class="alert-danger">tên error</span>
+				</div>
+
+				<div class="form-group">
+					<label for="recipient-name" class="col-form-label">Chức
+						năng cha(*)</label>
+					<div class="">
+						<select class="form-control" th:field="*{parentid}">
+							<option th:each="parent : ${PARENTID}" th:value="${parent.id}"
+								th:text="${parent.tenchucnang}"></option>
+							<option th:value="-1">Chức năng cha mới</option>
+						</select>
+					</div>
+
+				</div>
+				<button type="submit" class="btn btn-primary">Lưu</button>
+				<button type="reset" class="btn btn-primary">Huỷ</button>
+				<a class="btn btn-primary" href="/chucnang/list">Danh sách</a>
+			</form>
+		</div>
+	</section>
+
+</body>
+</html>

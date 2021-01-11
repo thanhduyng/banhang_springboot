@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/user.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Start Products  -->
+		<div class="products-box">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="title-all text-center">
+							<h1>Danh mục sản phẩm</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Sed sit amet lacus enim.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="special-menu text-center">
+							<div class="button-group filter-button-group">
+
+
+								<th:block th:each="item,index: ${categorys}">
+									<button th:if="${index.first}" class="active" data-filter="*">
+										<a th:text="${item.loaimon}"
+											th:href="@{'/san-pham/' + ${item.id}}"></a>
+									</button>
+									<button th:unless="${index.first}" class="item"
+										data-filter=".top-featured">
+										<a th:text="${item.loaimon}"
+											th:href="@{'/san-pham/' + ${item.id}}"></a>
+									</button>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row special-list">
+
+					<div class="col-lg-3 col-md-6 special-grid best-seller">
+						<th:block th:each="item: ${productsPaginate}">
+						<div th:if="${index.first}" class="item active">
+							<div class="products-single fix">
+								<div class="box-img-hover">
+									<div class="type-lb">
+										<p class="sale">Sale</p>
+									</div>
+									<img th:src="@{'/user/images/'+${item.image}}"
+										class="img-fluid" alt="Image">
+									<div class="mask-icon">
+										<ul>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="View"><i
+													class="fas fa-eye"></i></a></li>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="Compare"><i
+													class="fas fa-sync-alt"></i></a></li>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="Add to Wishlist"><i
+													class="far fa-heart"></i></a></li>
+										</ul>
+										<a class="cart" href="#">Add to Cart</a>
+									</div>
+								</div>
+								<div class="why-text">
+									<h4>Lorem ipsum dolor sit amet</h4>
+									<h5 th:text="${#numbers.formatCurrency(item.price)}"></h5>
+								</div>
+							</div>
+							</div>
+							
+							<div th:unless="${index.first}" class="item active">
+							<div class="products-single fix">
+								<div class="box-img-hover">
+									<div class="type-lb">
+										<p class="sale">Sale</p>
+									</div>
+									<img th:src="@{'/user/images/'+${item.image}}"
+										class="img-fluid" alt="Image">
+									<div class="mask-icon">
+										<ul>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="View"><i
+													class="fas fa-eye"></i></a></li>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="Compare"><i
+													class="fas fa-sync-alt"></i></a></li>
+											<li><a href="#" data-toggle="tooltip"
+												data-placement="right" title="Add to Wishlist"><i
+													class="far fa-heart"></i></a></li>
+										</ul>
+										<a class="cart" href="#">Add to Cart</a>
+									</div>
+								</div>
+								<div class="why-text">
+									<h4>Lorem ipsum dolor sit amet</h4>
+									<h5 th:text="${#numbers.formatCurrency(item.price)}"></h5>
+								</div>
+							</div>
+							</div>
+						</th:block>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="pagination">
+			<div
+				th:each="item,loop : ${#numbers.sequence(0,paginateInfo.totalPage)}">
+
+				<th:block th:if="${ (loop.index) == paginateInfo.currentPage }">
+					<a
+						th:href="@{'/san-pham/' + ${ idCategory } +'/'+ ${ loop.index }}"
+						class="active" th:text="${loop.index}"> </a>
+				</th:block>
+				<th:block th:unless="${ (loop.index) == paginateInfo.currentPage }">
+					<a
+						th:href="@{'/san-pham/' + ${ idCategory } +'/'+ ${ loop.index }}"
+						th:text="${loop.index}"> </a>
+				</th:block>
+			</div>
+		</div>
+		<br>
+		<!-- End Products  -->
+	</div>
+</body>
+</html>

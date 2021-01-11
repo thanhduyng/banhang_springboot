@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+</head>
+<body>
+	<ul th:fragment="navigation">
+		<!-- Start Main Top -->
+		<header class="main-header">
+			<!-- Start Navigation -->
+			<nav
+				class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+				<div class="container">
+					<!-- Start Header Navigation -->
+					<div class="navbar-header">
+						<button class="navbar-toggler" type="button"
+							data-toggle="collapse" data-target="#navbar-menu"
+							aria-controls="navbars-rs-food" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<i class="fa fa-bars"></i>
+						</button>
+						<a class="navbar-brand" href="/"><img
+							src="/user/images/logo.png" width="50%" class="logo" alt=""></a>
+					</div>
+					<!-- End Header Navigation -->
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="navbar-menu">
+						<ul class="nav navbar-nav ml-auto" data-in="fadeInDown"
+							data-out="fadeOutUp">
+							<li class="nav-item"><a class="nav-link" href="/come/">Trang
+									Chủ</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{'/come/gioi-thieu/'}">Giới Thiệu </a></li>
+							<li class="dropdown active"><a href="#"
+								class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Thực
+									Đơn</a>
+
+								<ul class="dropdown-menu">
+									<th:block th:each="item,index: ${categorys}">
+										<li><a th:text="${item.loaimon}"
+											th:href="@{'/come/san-pham/' + ${item.id}}"></a></li>
+									</th:block>
+								</ul></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/come/tin-tuc/trang/1">Tin Tức</a></li>
+
+							<li class="dropdown active"><a href="#"
+								class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Tài
+									Khoản</a>
+								<ul class="dropdown-menu">
+									<li><a href="/dang-nhap">Đăng nhập hoặc Đăng kí</a></li>
+									<li><a href="/dang-xuat">Đăng xuất</a></li>
+									
+
+								</ul></li>
+
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+					<li th:if="${session.CUSTOMER}"><a style="font-weight: bold;"
+						th:href="@{/come/ho-so/}"> <i
+							th:text="${session.CUSTOMER.display_name}"></i>
+					</a></li>
+
+
+
+					<!-- Start Atribute Navigation -->
+					<div class="attr-nav">
+						<ul>
+							<li class=""><a style="font-weight: bold;"
+								th:href="@{'/gio-hang/'}">Giỏ hàng <i
+									class="fa fa-shopping-bag"></i> <span class="badge"
+									th:text="${session.TotalQuantyCart}"></span></a></li>
+
+
+						</ul>
+
+					</div>
+			</nav>
+			<!-- End Navigation -->
+		</header>
+		<!-- End Main Top -->
+	</ul>
+</body>
+</html>

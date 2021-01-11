@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Site Metas -->
+<title>Chi tiết sản phẩm</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="/user/images/menu.jpg"
+	type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/user/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="/user/css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="/user/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/user/css/custom.css">
+<!-- FontAwesome Icons core CSS -->
+<link href="/tintuc/css/font-awesome.mined.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+	<!-- Start Main Top -->
+	<ul th:replace="fragments/header :: navigation"></ul>
+	<!-- End Main Top -->
+
+	<!-- Start Top Search -->
+	<div class="top-search">
+		<div class="container">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="Search">
+				<span class="input-group-addon close-search"><i
+					class="fa fa-times"></i></span>
+			</div>
+		</div>
+	</div>
+	<!-- End Top Search -->
+
+	<!-- Start All Title Box -->
+	<div class="all-title-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2>Chi tiết sản phẩm</h2>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Sản phẩm</li>
+						<li class="breadcrumb-item active">Chi tiết sản phẩm</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Title Box -->
+
+	<!-- Start Shop Detail  -->
+	<form action="">
+		<div class="shop-detail-box-main">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-xl-5 col-lg-5 col-md-6">
+						<div id="carousel-example-1"
+							class="single-product-slider carousel slide" data-ride="carousel">
+
+							<div class="carousel-inner" role="listbox">
+								<div class="carousel-item active">
+									<img class="d-block w-100"
+										th:src="@{'/getimage/'+${product.image}}" alt="First slide">
+								</div>
+
+							</div>
+							<a class="carousel-control-prev" href="#carousel-example-1"
+								role="button" data-slide="prev"> <i class="fa fa-angle-left"
+								aria-hidden="true"></i> <span class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next" href="#carousel-example-1"
+								role="button" data-slide="next"> <i
+								class="fa fa-angle-right" aria-hidden="true"></i> <span
+								class="sr-only">Next</span>
+							</a>
+
+						</div>
+
+					</div>
+
+					<div class="col-xl-7 col-lg-7 col-md-6">
+						<div class="single-product-details">
+							<h2 th:text="${product.name}"></h2>
+							<!-- 	Loại món: <td th:text="${product.categorys.loaimon}"></td> -->
+							<h4>Giá tiền:</h4>
+							<h5 th:text="${#numbers.formatCurrency(product.price)}"></h5><br>
+							<!-- <h4>Chi tiết món ăn:</h4>
+							<p th:text="${product.details}"></p> -->
+							<!-- <h7> <input type="hidden" th:value="${product.id_product}"
+								name="id" /> <span th:text="${product.id_product}"></h7> -->
+							<ul>
+								<li>
+									<div class="form-group quantity-box">
+										<label class="control-label">Số lượng</label> <input
+											type="number" min="1" max="1" value="1" name="" />
+
+									</div>
+								</li>
+							</ul>
+
+
+
+							<div class="price-box-bar">
+								<div class="cart-and-bay-btn">
+									<a class="btn hvr-hover" data-fancybox-close="" href="/come/">Tiếp
+										tục chọn món </a> <a
+										th:href="@{'/AddCart/' + ${product.id_product}}"
+										class="btn hvr-hover" data-fancybox-close="" type="">Thêm
+										vào giỏ hàng</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- a -->
+				<div class="row my-5">
+					<div class="card card-outline-secondary my-4">
+						<div class="card-header">
+							<h2>Chi tiết món ăn</h2>
+						</div>
+						<div class="card-body">
+							<div class="media mb-3">
+								<div class="mr-2">
+									<img width="85%" class="rounded-circle border p-1"
+										th:src="@{'/getimage/'+${product.image}}"
+										alt="Generic placeholder image">
+								</div>
+								<div class="">
+									<p th:text="${product.details}"></p>
+									<small class="text-muted" th:text="${product.updated_at}">x</small>
+								</div>
+							</div>
+							<a href="#" class="btn hvr-hover"> Đọc thêm</a>
+						</div>
+					</div>
+				</div>
+				<!-- a -->
+
+
+				<div class="row my-5">
+					<div class="col-lg-12">
+						<div class="title-all text-center">
+							<h1>Sản phẩm cùng loại</h1>
+
+						</div>
+
+
+						<div class="featured-products-box owl-carousel owl-theme">
+							<th:block th:each="item : ${productByIDCategory}">
+								<div class="item">
+									<div class="products-single fix">
+										<div class="box-img-hover">
+											<img th:src="@{'/getimage/'+${item.image}}" class="img-fluid"
+												alt="Image">
+											<div class="mask-icon">
+												<ul>
+													<li><a
+														th:href="@{/come/chi-tiet-san-pham/{id}(id=${item.id_product})}"
+														data-toggle="tooltip" data-placement="right"
+														title="Xem chi tiết"><i class="fas fa-eye"></i></a></li>
+
+												</ul>
+												<a class="cart"
+													th:href="@{'/AddCart/' + ${item.id_product}}">Thêm vào giỏ hàng
+													</a>
+											</div>
+										</div>
+										<div class="why-text">
+											<h4 th:text="${item.name}"></h4>
+											<h5 th:text="${#numbers.formatCurrency(item.price)}"></h5>
+										</div>
+									</div>
+								</div>
+							</th:block>
+						</div>
+
+					</div>
+				</div>
+
+
+
+
+			</div>
+		</div>
+	</form>
+	<!-- End Cart -->
+
+
+	<!-- Start Footer  -->
+	<ul th:replace="fragments/footer :: navigation"></ul>
+	<!-- End Footer  -->
+
+	<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+	<!-- ALL JS FILES -->
+	<script src="/user/js/jquery-3.2.1.min.js"></script>
+	<script src="/user/js/popper.min.js"></script>
+	<script src="/user/js/bootstrap.min.js"></script>
+	<!-- ALL PLUGINS -->
+	<script src="/user/js/jquery.superslides.min.js"></script>
+	<script src="/user/js/bootstrap-select.js"></script>
+	<script src="/user/js/inewsticker.js"></script>
+	<script src="/user/js/bootsnav.js."></script>
+	<script src="/user/js/images-loded.min.js"></script>
+	<script src="/user/js/isotope.min.js"></script>
+	<script src="/user/js/owl.carousel.min.js"></script>
+	<script src="/user/js/baguetteBox.min.js"></script>
+	<script src="/user/js/form-validator.min.js"></script>
+	<script src="/user/js/contact-form-script.js"></script>
+	<script src="/user/js/custom.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<title>danh sách loại món ăn</title>
+
+
+<style type="text/css">
+.container {
+	width: 95%;
+	margin: auto;
+	border-radius: 5px;
+	padding: 20px;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+
+			<!-- <div sec:authorize="isAuthenticated()">
+				Welcome <b><span th:utext="${#request.userPrincipal.name}">Username</span></b>
+				&nbsp; <i><span sec:authentication="principal.authorities">Roles</span></i>
+			</div> -->
+
+
+			<h2 class="myclass">Danh sách loại món ăn</h2>
+			<hr>
+			<br>
+
+			<form class="form-inline pull-right" action="#"
+				th:action="@{/category/search/1}" method="GET">
+				<div class="form-group">
+					<input th:value="${param.loaimon}" type="text" class="form-control"
+						name="loaimon" placeholder="tìm kiếm .." />
+				</div>
+				<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+			</form>
+			<br> <br> <br>
+
+
+			<th:block th:if="${null == LIST_CATEGORY}">
+				<h3 style="text-align: center;" th:text="${session.messenger}"></h3>
+			</th:block>
+			<th:block th:unless="${null == LIST_CATEGORY}">
+
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>STT</th>
+							<th>Tên loại món</th>
+							<th><a href="/category/">Thêm loại món ăn</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item,index: ${LIST_CATEGORY.pageList}">
+							<td th:text="${index.count}"></td>
+							<td th:text="${item.loaimon}"></td>
+
+							<td><a class="btn btn-primary btn-sm"
+								th:href="@{'/category/edit/'+ ${item.id}}">Sửa</a> | <a
+								class="btn btn-primary btn-sm"
+								th:href="@{'/category/delete/'+ ${item.id}}">Xoá</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<ul class="pagination">
+					<li
+						th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+						<a class="page-link" th:href="@{/category/page/1}">Đầu tiên</a>
+					</li>
+					<li
+						th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+						<a class="page-link" aria-label="Previous"
+						th:href="@{|${baseUrl}${currentIndex - 1}|}"
+						title='Go to previous page'><span aria-hidden="true">«</span>
+							<span class="sr-only">Previous</span></a>
+					</li>
+					<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+						th:class="${item == currentIndex ? 'page-item active' :'page-item' }">
+						<a class="page-link" th:href="@{|${baseUrl}${item}|}"> <span
+							th:text='${item}'>1</span>
+					</a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+						<a class="page-link" aria-label="Next"
+						th:href="@{|${baseUrl}${currentIndex + 1}|}"
+						title='Go to next page'><span aria-hidden="true">»</span> <span
+							class="sr-only">Next</span></a>
+					</li>
+					<li
+						th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+						<a class="page-link" th:href="@{|${baseUrl}${totalPageCount}|}">Cuối
+							cùng</a>
+					</li>
+					<hr>
+					<div>Tổng số trang: [[${totalPageCount}]]
+						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;trang: [[${currentIndex}]] /
+						[[${totalPageCount}]]</div>
+						
+				</ul>
+			</th:block>
+		</div>
+	</div>
+</body>
+</html>

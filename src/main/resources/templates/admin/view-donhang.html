@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/admin.html}">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>danh sach đơn hàng</title>
+
+
+<style type="text/css">
+.container {
+	width: 100%;
+	margin: auto;
+	border-radius: 5px;
+	background-color: #;
+	padding: 50px;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h2 align="">Danh sách đơn hàng</h2>
+			<a th:href="@{/don-hang/users/export/pdf}">Xuất sang PDF</a>
+			<hr>
+			<br>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Mã đơn hàng</th>
+						<th>Tên người mua</th>
+						<th>Tên sản phẩm</th>
+						<th>Số lượng</th>
+						<th>Tổng tiền</th>
+						<th>Giờ và Ngày</th>
+						<th>Trạng thái</th>
+						<th width="170px">Chức năng</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item,index: ${LIST_DONHANG.pageList}">
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.bills.display_name}"></td>
+						<td th:text="${item.products.name}"></td>
+						<td th:text="${item.quantity}"></td>
+						<td th:text="${#numbers.formatCurrency(item.total)}"></td>
+						<!-- <td th:text="${item.tinhtrang}"></td> -->
+						<td th:text="${item.datetime + ''}"></td>
+						<td><span th:text="${item.trangthai ==1}? 'Đang xử lí'"></span>
+							<span th:text="${item.trangthai ==2}? 'Đang giao hàng'"></span> <span
+							th:text="${item.trangthai ==3}? 'Đã giao hàng'"></span></td>
+						<td><a class="btn btn-primary btn-sm"
+							th:href="@{'/don-hang/edit/'+ ${item.id}}">Cập nhập</a> | <a
+							class="btn btn-primary btn-sm"
+							th:href="@{'/don-hang/delete/'+ ${item.id}}">Xoá</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="pagination">
+				<li
+					th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+					<a class="page-link" th:href="@{/don-hang/page/1}">Đầu tiên</a>
+				</li>
+				<li
+					th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+					<a class="page-link" aria-label="Previous"
+					th:href="@{|${baseUrl}${currentIndex - 1}|}"
+					title='Go to previous page'><span aria-hidden="true">«</span> <span
+						class="sr-only">Previous</span></a>
+				</li>
+				<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+					th:class="${item == currentIndex ? 'page-item active' :'page-item' }">
+					<a class="page-link" th:href="@{|${baseUrl}${item}|}"> <span
+						th:text='${item}'>1</span>
+				</a>
+				</li>
+				<li
+					th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+					<a class="page-link" aria-label="Next"
+					th:href="@{|${baseUrl}${currentIndex + 1}|}"
+					title='Go to next page'><span aria-hidden="true">»</span> <span
+						class="sr-only">Next</span></a>
+				</li>
+				<li
+					th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+					<a class="page-link" th:href="@{|${baseUrl}${totalPageCount}|}">Cuối
+						cùng</a>
+				</li>
+				<hr>
+				<div>Tổng số trang: [[${totalPageCount}]]
+					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;trang: [[${currentIndex}]] /
+					[[${totalPageCount}]]</div>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
